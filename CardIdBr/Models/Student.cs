@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using CardIdBr.Util;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace CardIdBr.Models
 {
@@ -6,19 +8,29 @@ namespace CardIdBr.Models
     {
         [Key]
         public int Id { get; set; }
-        [Required]
+
+        [DefaultRequired, StringLength(500)]
         public string FullName { get; set; }
-        [Required]
+
+        [DefaultRequired, StringLength(500)]
+        public string Email { get; set; }
+
+        [DefaultRequired, StringLength(15)]
         public string Cpf { get; set; }
-        [Required]
+
+        [DefaultRequired, StringLength(15)]
         public string Rg { get; set; }
-        [Required]
+
+        [DefaultRequired, DataType(DataType.Date)]
         public DateTime BirthDate { get; set; }
-        [Required]
+
+        [DefaultRequired, StringLength(500)]
         public string InstituitionName { get; set; }
-        [Required]
+
+        [DefaultRequired, StringLength(500)]
         public string Course { get; set; }
-        [Required]
+
+        [DefaultRequired, StringLength(30)]
         public string SchoolLevel { get; set; }
     }
 }
