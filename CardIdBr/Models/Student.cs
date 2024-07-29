@@ -12,7 +12,7 @@ namespace CardIdBr.Models
         [DefaultRequired, StringLength(500)]
         public string FullName { get; set; }
 
-        [DefaultRequired, StringLength(500)]
+        [DefaultRequired, ValidEmail, StringLength(500)]
         public string Email { get; set; }
 
         [DefaultRequired, StringLength(15)]
