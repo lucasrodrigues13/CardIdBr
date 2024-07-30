@@ -1,8 +1,7 @@
 ﻿using CardIdBr.Util;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace CardIdBr.Models
+namespace CardIdBr.Entities
 {
     public class Student
     {

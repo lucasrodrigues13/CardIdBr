@@ -1,9 +1,11 @@
 ﻿using CardIdBr.Data;
-using CardIdBr.Models;
+using CardIdBr.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CardIdBr.Controllers
 {
+    [Authorize]
     public class StudentController : Controller
     {
         private readonly ApplicationDbContext _context;

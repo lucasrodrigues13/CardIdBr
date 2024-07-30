@@ -1,4 +1,6 @@
 using CardIdBr.Data;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace CardIdBr
@@ -13,6 +15,23 @@ namespace CardIdBr
             builder.Services.AddControllersWithViews();
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
+
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(o =>
+                {
+                    o.Cookie.Name = "AspNetCore.Cookies";
+                    o.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+                    o.SlidingExpiration = true;
+                });
+
+            builder.Services.Configure<IdentityOptions>(o =>
+            {
+                o.Password.RequiredLength = 8;
+                o.Password.RequiredUniqueChars = 3;
+                o.Password.RequireUppercase = true;
+            });
 
             var app = builder.Build();
 
@@ -29,6 +48,7 @@ namespace CardIdBr
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(
