@@ -1,4 +1,5 @@
 using CardIdBr.Data;
+using CardIdBr.Util.Image;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -32,6 +33,8 @@ namespace CardIdBr
                 o.Password.RequiredUniqueChars = 3;
                 o.Password.RequireUppercase = true;
             });
+
+            builder.Services.AddScoped<IImageManager, ImageManager>();
 
             var app = builder.Build();
 

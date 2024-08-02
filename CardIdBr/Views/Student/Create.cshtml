@@ -1,18 +1,18 @@
-﻿@using CardIdBr.Entities
-@model Student
+﻿@using CardIdBr.Models.Student
+@model StudentViewModel
 
 @{
     ViewData["Title"] = "Adicionar Estudante";
 }
+<link rel="stylesheet" href="~/css/cardTemplate.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.css" />
 
-<h1>Adicionar</h1>
-
-<h4>Estudante</h4>
+<h4>Cadastrar Estudante</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-6">
         <div class="border border-black p-3">
-            <form asp-action="Create">
+            <form asp-action="Create" enctype="multipart/form-data">
                 <div class="form-group py-2">
                     <label asp-for="FullName" class="control-label">Nome Completo</label>
                     <span asp-validation-for="FullName" class="text-danger"></span>
@@ -53,9 +53,18 @@
                     <span asp-validation-for="SchoolLevel" class="text-danger"></span>
                     <input asp-for="SchoolLevel" class="form-control" />
                 </div>
+                <div class="form-group py-2">
+                    <span asp-validation-for="UseCode" class="text-danger"></span>
+                    <input type="hidden" asp-for="UseCode" class="form-control" />
+                </div>
+                <div class="form-group py-2">
+                    <label asp-for="Photo" class="control-label">Foto do Rosto</label>
+                    <span asp-validation-for="Photo" class="text-danger"></span>
+                    <input type="file" asp-for="Photo" class="form-control" />
+                </div>
                 <div class="row pt-4">
                     <div class="col-6 col-md-6">
-                        <button type="submit" class="btn btn-primary form-control">Criar</button>
+                        <button type="submit" id="btnSave" class="btn btn-primary form-control">Criar</button>
                     </div>
                     <div class="col-6 col-md-6">
                         <a asp-action="Index" class="btn btn-outline-primary border form-control text-bg-light">
@@ -66,10 +75,13 @@
             </form>
         </div>
     </div>
+    <partial name="_CardIdPartial.cshtml" />
 </div>
 
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        <script type="text/javascript" src="~/js/student/card.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js"></script>
     }
 }

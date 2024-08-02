@@ -1,19 +1,18 @@
-﻿@using CardIdBr.Entities
-@model Student
+﻿@using CardIdBr.Models.Student
+@model StudentViewModel
 
 @{
     ViewData["Title"] = "Edit";
 }
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.css" />
 <link rel="stylesheet" href="~/css/cardTemplate.css" />
 
-<h1>Edit</h1>
-
-<h4>Student</h4>
+<h4>Editar Estudante</h4>
 <hr />
 <div class="row">
     <div class="col-md-6">
         <div class="border border-black p-3">
-            <form asp-action="Edit">
+            <form id="formEdit" asp-action="Edit">
                 <div class="form-group py-2">
                     <label asp-for="FullName" class="control-label">Nome Completo</label>
                     <span asp-validation-for="FullName" class="text-danger"></span>
@@ -54,9 +53,19 @@
                     <span asp-validation-for="SchoolLevel" class="text-danger"></span>
                     <input asp-for="SchoolLevel" class="form-control" />
                 </div>
+                <div class="form-group py-2">
+                    <label asp-for="UseCode" class="control-label">Código de Uso</label>
+                    <span asp-validation-for="UseCode" class="text-danger"></span>
+                    <input readonly asp-for="UseCode" class="form-control" />
+                </div>
+                <div class="form-group py-2">
+                    <label asp-for="Photo" class="control-label">Foto do Rosto</label>
+                    <span asp-validation-for="Photo" class="text-danger"></span>
+                    <input type="file" asp-for="Photo" class="form-control" />
+                </div>
                 <div class="row pt-4">
                     <div class="col-6 col-md-3">
-                        <button type="submit" class="btn btn-primary form-control">Salvar</button>
+                        <button type="submit" id="btnSave" class="btn btn-primary form-control">Salvar</button>
                     </div>
                     <div class="col-6 col-md-3">
                         <a asp-action="Index" class="btn btn-outline-primary border form-control text-bg-light">Voltar</a>
@@ -65,45 +74,13 @@
             </form>
         </div>
     </div>
-    <div class="col-md-6">
-        @* <img src="/images/card_template.png" alt="Imagem da carteira de estudante" class="img-carteirinha"> *@
-        <figure id="container-card">
-            <img src="/images/card_template.png" alt="Imagem da carteira de estudante" class="img-carteirinha" />
-            <div>
-                <div class="div-card-name">
-                    <figcaption class="text-name">FERNANDO LUCAS RODRIGUES SIMÕES</figcaption>
-                </div>
-                <div class="div-card-instituition">
-                    <figcaption class="text-instituition">CENTRO UNIVERSITÁRIO CENTRO UNIVERSITÁRIO DE BELO HORIZONTE - UNIBH</figcaption>
-                </div>
-                <div class="div-card-course">
-                    <figcaption class="text-course">CIÊNCIA DA COMPUTAÇÃO</figcaption>
-                </div>
-                <div class="div-card-cpf">
-                    <figcaption class="text-cpf"><b>CPF:</b> 128.223.006-90</figcaption>
-                </div>
-                <div class="div-card-rg">
-                    <figcaption class="text-rg"><b>RG:</b> 14.983.233</figcaption>
-                </div>
-                <div class="div-card-birthday">
-                    <figcaption class="text-birthday"><b>DATA DE NASC.:</b> 15/09/1994</figcaption>
-                </div>
-                <div class="div-card-validate">
-                    <figcaption class="text-validate"><b>VALIDADE:</b> 15/09/2025</figcaption>
-                </div>
-                <div class="div-card-use-code">
-                    <figcaption class="label-birthday">CÓD. USO</figcaption>
-                    <figcaption class="value-birthday">123-ABCD</figcaption>
-                </div>
-                <div class="div-card-qr-code">
-                </div>
-            </div>
-        </figure>
-    </div>
+    <partial name="_CardIdPartial.cshtml" />
 </div>
 
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        <script type="text/javascript" src="/js/student/card.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js"></script>
     }
 }

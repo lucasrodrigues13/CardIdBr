@@ -1,7 +1,11 @@
 ﻿using CardIdBr.Data;
 using CardIdBr.Entities;
+using CardIdBr.Models.Student;
+using CardIdBr.Util.Image;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
+using QRCoder;
 
 namespace CardIdBr.Controllers
 {
@@ -9,17 +13,17 @@ namespace CardIdBr.Controllers
     public class StudentController : Controller
     {
         private readonly ApplicationDbContext _context;
-        public StudentController(ApplicationDbContext context)
+        private readonly IImageManager _imageManager;
+        public StudentController(ApplicationDbContext context, IImageManager imageManager)
         {
             _context = context;
+            _imageManager = imageManager;
         }
-        // GET: StudentController
         public ActionResult Index()
         {
             return View(_context.Students.ToList());
         }
 
-        // GET: StudentController/Details/5
         public ActionResult Details(int id)
         {
             var studentFromDb = _context.Students.Find(id);
@@ -30,21 +34,34 @@ namespace CardIdBr.Controllers
             return View(studentFromDb);
         }
 
-        // GET: StudentController/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: StudentController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Student student)
+        public ActionResult Create(StudentViewModel studentViewModel)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
+                    var student = new Student
+                    {
+                        BirthDate = DateTime.Now,
+                        Course = studentViewModel.Course,
+                        Cpf = studentViewModel.Cpf,
+                        Email = studentViewModel.Email,
+                        FullName = studentViewModel.FullName,
+                        Id = studentViewModel.Id,
+                        InstituitionName = studentViewModel.InstituitionName,
+                        Rg = studentViewModel.Rg,
+                        SchoolLevel = studentViewModel.SchoolLevel,
+                        UseCode = studentViewModel.UseCode,
+                    };
+                    student.ImagePath = _imageManager.SaveUserImage(studentViewModel);
+
                     _context.Students.Add(student);
                     _context.SaveChanges();
                 }
@@ -56,31 +73,63 @@ namespace CardIdBr.Controllers
             }
         }
 
-        // GET: StudentController/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null || id == 0)
                 return NotFound();
 
-            var studentFromDb = _context.Students.Find(id);
+            var studentViewModel = _context.Students.Where(a => a.Id == id).Select(b => new StudentViewModel
+            {
+                Id = b.Id,
+                UseCode = b.UseCode,
+                SchoolLevel = b.SchoolLevel,
+                Rg = b.Rg,
+                BirthDate = b.BirthDate,
+                Course = b.Course,
+                Email = b.Email,
+                FullName = b.FullName,
+                Cpf = b.Cpf,
+                InstituitionName = b.InstituitionName
+            }).FirstOrDefault();
 
-            if (studentFromDb == null)
+            if (studentViewModel == null)
                 return NotFound();
 
-            return View(studentFromDb);
+            using (QRCodeGenerator qrGenerator = new QRCodeGenerator())
+            using (QRCodeData qrCodeData = qrGenerator.CreateQrCode(studentViewModel.Cpf, QRCodeGenerator.ECCLevel.Q))
+            using (PngByteQRCode qrCode = new PngByteQRCode(qrCodeData))
+            {
+                studentViewModel.QrCode = Convert.ToBase64String(qrCode.GetGraphic(50, false));
+            }
+
+            return View(studentViewModel);
         }
 
-
-        // POST: StudentController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Student student)
+        public ActionResult Edit(StudentViewModel studentViewModel)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    _context.Students.Update(student);
+                    var studentFromDb = _context.Students.Find(studentViewModel.Id);
+
+                    if (studentFromDb == null)
+                        return NotFound();
+
+                    studentFromDb.BirthDate = studentViewModel.BirthDate;
+                    studentFromDb.Course = studentViewModel.Course;
+                    studentFromDb.Cpf = studentViewModel.Cpf;
+                    studentFromDb.Email = studentViewModel.Email;
+                    studentFromDb.FullName = studentViewModel.FullName;
+                    studentFromDb.Id = studentViewModel.Id;
+                    studentFromDb.InstituitionName = studentViewModel.InstituitionName;
+                    studentFromDb.Rg = studentViewModel.Rg;
+                    studentFromDb.SchoolLevel = studentViewModel.SchoolLevel;
+                    studentFromDb.ImagePath = _imageManager.SaveUserImage(studentViewModel);
+
+                    _context.Students.Update(studentFromDb);
                     _context.SaveChanges();
                 }
                 return RedirectToAction(nameof(Index));
@@ -91,7 +140,6 @@ namespace CardIdBr.Controllers
             }
         }
 
-        // GET: StudentController/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null || id == 0)
@@ -107,7 +155,6 @@ namespace CardIdBr.Controllers
             return View(studentFromDb);
         }
 
-        // POST: StudentController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id)
@@ -117,7 +164,7 @@ namespace CardIdBr.Controllers
                 Student? studentFromDb = _context.Students.Find(id);
                 if (studentFromDb == null)
                     return NotFound();
-                
+
                 _context.Students.Remove(studentFromDb);
                 _context.SaveChanges();
 

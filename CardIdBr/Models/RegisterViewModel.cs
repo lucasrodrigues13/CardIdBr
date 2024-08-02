@@ -1,4 +1,4 @@
-﻿using CardIdBr.Util;
+﻿using CardIdBr.Util.Attributes;
 using System.ComponentModel.DataAnnotations;
 
 namespace CardIdBr.Models

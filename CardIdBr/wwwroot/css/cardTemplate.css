@@ -69,13 +69,30 @@
     font-weight: bolder;
 }
 
+.img-card-qr-code {
+    max-width: 1500px;
+    max-height: 70px;
+}
 .div-card-qr-code {
     position: absolute;
-    top: 220px;
-    left: 52px;
-    width: 65px;
-    height: 65px;
-    background-color:white;
+    top: 218px;
+    left: 50px;
+    max-width: 65px;
+    max-height: 65px;
     color: black;
     font-weight: bolder;
+}
+
+.div-card-photo {
+    position: absolute;
+    top: 72px;
+    left: 29px;
+    max-width: 65px;
+    max-height: 65px;
+    color: black;
+    font-weight: bolder;
+}
+.img-card-photo {
+    max-width: 150px;
+    max-height: 113px;
 }

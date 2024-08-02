@@ -1,4 +1,4 @@
-﻿using CardIdBr.Util;
+﻿using CardIdBr.Util.Attributes;
 using System.ComponentModel.DataAnnotations;
 
 namespace CardIdBr.Entities
@@ -31,5 +31,11 @@ namespace CardIdBr.Entities
 
         [DefaultRequired, StringLength(30)]
         public string SchoolLevel { get; set; }
+
+        [DefaultRequired, StringLength(15)]
+        public string UseCode { get; set; }
+
+        [DefaultRequired, StringLength(500)]
+        public string ImagePath { get; set; }
     }
 }

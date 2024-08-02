@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel.DataAnnotations;
 
-namespace CardIdBr.Util
+namespace CardIdBr.Util.Attributes
 {
     public class ValidEmailAttribute : RequiredAttribute, IClientModelValidator
     {
