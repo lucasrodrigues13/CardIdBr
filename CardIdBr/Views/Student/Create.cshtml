@@ -5,7 +5,7 @@
     ViewData["Title"] = "Adicionar Estudante";
 }
 <link rel="stylesheet" href="~/css/cardTemplate.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css" />
 
 <h4>Cadastrar Estudante</h4>
 <hr />
@@ -76,12 +76,13 @@
         </div>
     </div>
     <partial name="_CardIdPartial.cshtml" />
+    <partial name="_PhotoCropperModal.cshtml" />
 </div>
 
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
         <script type="text/javascript" src="~/js/student/card.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
     }
 }

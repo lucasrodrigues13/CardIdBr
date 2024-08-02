@@ -2,7 +2,10 @@ using CardIdBr.Data;
 using CardIdBr.Util.Image;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using System.Globalization;
 
 namespace CardIdBr
 {
@@ -36,6 +39,14 @@ namespace CardIdBr
 
             builder.Services.AddScoped<IImageManager, ImageManager>();
 
+            builder.Services.Configure<RequestLocalizationOptions>(options =>
+            {
+                var supportedCultures = new[] { new CultureInfo("pt-BR") };
+                options.DefaultRequestCulture = new RequestCulture("pt-BR");
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
+            });
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -53,6 +64,9 @@ namespace CardIdBr
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            var localizationOptions = app.Services.GetService<IOptions<RequestLocalizationOptions>>().Value;
+            app.UseRequestLocalization(localizationOptions);
 
             app.MapControllerRoute(
                 name: "default",

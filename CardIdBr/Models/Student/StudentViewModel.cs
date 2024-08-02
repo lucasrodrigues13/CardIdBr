@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using CardIdBr.Util.Attributes;
+using System.ComponentModel.DataAnnotations;
 
 namespace CardIdBr.Models.Student
 {
@@ -7,34 +8,34 @@ namespace CardIdBr.Models.Student
         [Key]
         public int Id { get; set; }
 
-        [Required, StringLength(500), Display(Name = "Nome Completo")]
+        [DefaultRequired, StringLength(500), Display(Name = "Nome Completo")]
         public string FullName { get; set; }
 
-        [Required, EmailAddress, StringLength(500)]
+        [DefaultRequired, EmailAddress(ErrorMessage = "Email Inválido"), StringLength(500)]
         public string Email { get; set; }
 
-        [Required, StringLength(15)]
+        [DefaultRequired, StringLength(15)]
         public string Cpf { get; set; }
 
-        [Required, StringLength(15)]
+        [DefaultRequired, StringLength(15)]
         public string Rg { get; set; }
 
-        [Required, DataType(DataType.Date)]
+        [DefaultRequired, DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime BirthDate { get; set; }
 
-        [Required, StringLength(500)]
+        [DefaultRequired, StringLength(500)]
         public string InstituitionName { get; set; }
 
-        [Required, StringLength(500)]
+        [DefaultRequired, StringLength(500)]
         public string Course { get; set; }
 
-        [Required, StringLength(30)]
+        [DefaultRequired, StringLength(30)]
         public string SchoolLevel { get; set; }
 
-        [Required, StringLength(15)]
+        [DefaultRequired, StringLength(15)]
         public string UseCode { get; set; }
 
-        [Required]
+        [DefaultRequired]
         public IFormFile Photo { get; set; }
 
         public string? QrCode { get; set; }

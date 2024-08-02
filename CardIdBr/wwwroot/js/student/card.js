@@ -1,12 +1,70 @@
 ﻿$(document).ready(function () {
+    $("form input").on('change', function () {
+        $(".text-name").html($("#FullName").val().toUpperCase());
+        $(".text-instituition").html($("#InstituitionName").val().toUpperCase());
+        $(".text-course").html($("#Course").val().toUpperCase());
+        $(".text-cpf").html("<b>CPF:</b> " + $("#Cpf").val().toUpperCase());
+        $(".text-rg").html("<b>RG:</b> " + $("#Rg").val().toUpperCase());
+        $(".text-birthdate").html("<b>DATA DE NASC.:</b> " + $("#BirthDate").val().toUpperCase());
+    });
+
     $("#btnSave").on("click", function () {
         let useCode = useCodeGenerate();
         $("#UseCode").val(useCode);
         $("#formEdit").trigger("submit");
     });
+
+    let croppieInstance;
     $('#Photo').on('change', function () {
-        $("#btn-open-modal").click();
-        readFile(this);
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                $('#resizeModal').modal('show');
+
+                if (croppieInstance) {
+                    croppieInstance.destroy();
+                }
+                const image = document.getElementById('modal-img-card-photo');
+                image.src = e.target.result;
+
+                croppieInstance = new Cropper(image, {
+                    aspectRatio: 113 / 144,
+                    autoCropArea: 1,
+                    movable: true,
+                    zoomable: true,
+                    rotatable: false,
+                    scalable: false,
+                    responsive: false,
+                    cropBoxResizable: true,
+                    minContainerWidth: 300,
+                    minContainerHeight: 300,
+
+                });
+
+                croppieInstance.bind({
+                    url: e.target.result
+                });
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+
+    $('#cropButton').on('click', function () {
+        const canvas = croppieInstance.getCroppedCanvas({
+            width: 113,
+            height: 150,
+        });
+
+        canvas.toBlob(function (blob) {
+            const url = URL.createObjectURL(blob);
+            const resizedImageContainer = $('.div-card-photo')[0];
+            const resizedImage = $('.img-card-photo')[0];
+            resizedImage.src = url;
+            resizedImageContainer.style.display = 'block';
+
+            $('#resizeModal').modal('hide');
+        }, 'image/jpeg');
     });
 });
 
@@ -43,7 +101,7 @@ function setProfilePhotoOnCard() {
         }
         reader.readAsDataURL(file);
     }
-} 
+}
 
 function readFile(input) {
     if (input.files && input.files[0]) {

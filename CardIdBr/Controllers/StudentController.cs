@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using QRCoder;
+using System.Globalization;
 
 namespace CardIdBr.Controllers
 {
@@ -36,7 +37,9 @@ namespace CardIdBr.Controllers
 
         public ActionResult Create()
         {
-            return View();
+            CultureInfo.CurrentCulture = new CultureInfo("pt-BR");
+            CultureInfo.CurrentUICulture = new CultureInfo("pt-BR");
+            return View(new StudentViewModel());
         }
 
         [HttpPost]
