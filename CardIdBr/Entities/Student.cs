@@ -8,34 +8,43 @@ namespace CardIdBr.Entities
         [Key]
         public int Id { get; set; }
 
-        [DefaultRequired, StringLength(500)]
+        [Required, StringLength(500)]
         public string FullName { get; set; }
 
-        [DefaultRequired, ValidEmail, StringLength(500)]
+        [Required, ValidEmail, StringLength(500)]
         public string Email { get; set; }
 
-        [DefaultRequired, StringLength(15)]
+        [Required, StringLength(15)]
         public string Cpf { get; set; }
 
-        [DefaultRequired, StringLength(15)]
+        [Required, StringLength(15)]
         public string Rg { get; set; }
 
-        [DefaultRequired, DataType(DataType.Date)]
+        [Required, DataType(DataType.Date)]
         public DateTime BirthDate { get; set; }
 
-        [DefaultRequired, StringLength(500)]
+        [DataType(DataType.Date)]
+        public DateTime? Validate { get; set; }
+
+        [Required, StringLength(500)]
         public string InstituitionName { get; set; }
 
-        [DefaultRequired, StringLength(500)]
+        [Required, StringLength(500)]
         public string Course { get; set; }
 
-        [DefaultRequired, StringLength(30)]
+        [Required, StringLength(30)]
         public string SchoolLevel { get; set; }
 
-        [DefaultRequired, StringLength(15)]
+        [Required, StringLength(15)]
         public string UseCode { get; set; }
 
-        [DefaultRequired, StringLength(500)]
+        [Required, StringLength(500)]
         public string ImagePath { get; set; }
+
+        [Required, DataType(DataType.Date)]
+        public DateTime CreatedAt { get; set; }
+
+        [DataType(DataType.Date)]
+        public DateTime? UpdatedAt { get; set; }
     }
 }

@@ -28,14 +28,14 @@
                 <figcaption class="text-validate"><b>VALIDADE:</b> </figcaption>
             </div>
             <div class="div-card-use-code">
-                <figcaption class="label-birthday">CÓD. USO</figcaption>
-                <figcaption class="value-birthday">123-ABCD</figcaption>
+                <figcaption class="label-use-code">CÓD. USO</figcaption>
+                <figcaption class="text-use-code">123-ABCD</figcaption>
             </div>
             <div class="div-card-qr-code">
                 <img class="img-card-qr-code" title="QRCODE" src="@String.Format("data:image/png;base64,{0}",@Model.QrCode)" />
             </div>
             <div class="div-card-photo">
-                <img class="img-card-photo" title="Foto de Rosto" src="@String.Format("data:image/png;base64,{0}",@Model.Photo) | " />
+                <img class="img-card-photo" title="Foto de Rosto" src="@String.Format("data:image/png;base64,{0}",@Model.ImageCroppedBase64)" />
             </div>
         </div>
     </figure>

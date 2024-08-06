@@ -1,5 +1,6 @@
 ﻿using CardIdBr.Entities;
 using CardIdBr.Models.Student;
+using System.Collections;
 
 namespace CardIdBr.Util.Image
 {
@@ -10,15 +11,16 @@ namespace CardIdBr.Util.Image
         {
             _webRootPath = env.WebRootPath;
         }
-        public byte[] GetByEmail(string email)
+        public string GetByPath(string path)
         {
-            throw new NotImplementedException();
+            var file = File.ReadAllBytes(path);
+            return Convert.ToBase64String(file);
         }
 
         public string SaveUserImage(StudentViewModel student)
         {
-            var name = $"{student.Email}_{student.Id}";
-            var path = $"{_webRootPath}\\photos";
+            var name = $"{student.Id}.{student.Image.FileName.Split('.').Last()}";
+            var path = $"{_webRootPath}\\photos\\{student.Email}";
             var fullPath = $"{path}\\{name}";
 
             if (!Directory.Exists(path))
@@ -27,10 +29,10 @@ namespace CardIdBr.Util.Image
             if (File.Exists(fullPath))
                 File.Delete(fullPath);
 
-            using (var stream = File.Create(fullPath))
-            {
-                student.Photo.CopyToAsync(stream);
-            }
+            var base64Data = student.ImageCroppedBase64.Substring(student.ImageCroppedBase64.IndexOf(',') + 1);
+            var imageBytes = Convert.FromBase64String(base64Data);
+
+            File.WriteAllBytes(fullPath, imageBytes);
 
             return fullPath;
         }

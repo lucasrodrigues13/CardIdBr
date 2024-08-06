@@ -1,34 +1,42 @@
 ﻿$(document).ready(function () {
+    fillCardId();
     $("form input").on('change', function () {
-        $(".text-name").html($("#FullName").val().toUpperCase());
-        $(".text-instituition").html($("#InstituitionName").val().toUpperCase());
-        $(".text-course").html($("#Course").val().toUpperCase());
-        $(".text-cpf").html("<b>CPF:</b> " + $("#Cpf").val().toUpperCase());
-        $(".text-rg").html("<b>RG:</b> " + $("#Rg").val().toUpperCase());
-        $(".text-birthdate").html("<b>DATA DE NASC.:</b> " + $("#BirthDate").val().toUpperCase());
+        fillCardId();
     });
 
-    $("#btnSave").on("click", function () {
+    $("#btnSave").on("click", function (e) {
+        e.preventDefault();
         let useCode = useCodeGenerate();
         $("#UseCode").val(useCode);
-        $("#formEdit").trigger("submit");
+
+        var canvas = cropper.getCroppedCanvas();
+        canvas.toBlob(function (blob) {
+            var reader = new FileReader();
+            reader.readAsDataURL(blob);
+            reader.onloadend = function () {
+                var base64data = reader.result;
+                document.getElementById('ImageCroppedBase64').value = base64data;
+                $("#formStudent").trigger("submit");
+            }
+        });
+
     });
 
-    let croppieInstance;
-    $('#Photo').on('change', function () {
+    let cropper;
+    $('#Image').on('change', function () {
         const file = event.target.files[0];
         if (file) {
             const reader = new FileReader();
             reader.onload = function (e) {
                 $('#resizeModal').modal('show');
 
-                if (croppieInstance) {
-                    croppieInstance.destroy();
+                if (cropper) {
+                    cropper.destroy();
                 }
                 const image = document.getElementById('modal-img-card-photo');
                 image.src = e.target.result;
 
-                croppieInstance = new Cropper(image, {
+                cropper = new Cropper(image, {
                     aspectRatio: 113 / 144,
                     autoCropArea: 1,
                     movable: true,
@@ -42,7 +50,7 @@
 
                 });
 
-                croppieInstance.bind({
+                cropper.bind({
                     url: e.target.result
                 });
             }
@@ -51,7 +59,7 @@
     });
 
     $('#cropButton').on('click', function () {
-        const canvas = croppieInstance.getCroppedCanvas({
+        const canvas = cropper.getCroppedCanvas({
             width: 113,
             height: 150,
         });
@@ -114,4 +122,31 @@ function readFile(input) {
         }
         reader.readAsDataURL(input.files[0]);
     }
+}
+
+function fillCardId() {
+    $(".text-name").html($("#FullName").val().toUpperCase());
+    $(".text-instituition").html($("#InstituitionName").val().toUpperCase());
+    $(".text-course").html($("#Course").val().toUpperCase());
+    $(".text-cpf").html("<b>CPF:</b> " + $("#Cpf").val().toUpperCase());
+    $(".text-rg").html("<b>RG:</b> " + $("#Rg").val().toUpperCase());
+
+    if ($("#BirthDate").val()) {
+        var birthdate = new Date($("#BirthDate").val());
+        var day = checkZeroDate(birthdate.getDate());
+        var month = checkZeroDate(birthdate.getMonth());
+        var year = checkZeroDate(birthdate.getFullYear());
+
+        $(".text-birthdate").html("<b>DATA DE NASC.:</b> " + day + "/" + month + "/" + year)
+    }
+    //$(".text-birthdate").html("<b>DATA DE NASC.:</b> " + new Date().toLocaleDateString());
+    $(".text-validate").html("<b>VALIDADE:</b> " + new Date($("#Validate").val()).toLocaleDateString());
+    $(".text-use-code").html($("#UseCode").val().toUpperCase());
+}
+
+function checkZeroDate(data) {
+    if (data.length == 1) {
+        data = "0" + data;
+    }
+    return data;
 }

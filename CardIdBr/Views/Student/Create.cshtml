@@ -12,7 +12,7 @@
 <div class="row">
     <div class="col-md-6">
         <div class="border border-black p-3">
-            <form asp-action="Create" enctype="multipart/form-data">
+            <form id="formStudent" asp-action="Create" enctype="multipart/form-data">
                 <div class="form-group py-2">
                     <label asp-for="FullName" class="control-label">Nome Completo</label>
                     <span asp-validation-for="FullName" class="text-danger"></span>
@@ -58,9 +58,10 @@
                     <input type="hidden" asp-for="UseCode" class="form-control" />
                 </div>
                 <div class="form-group py-2">
-                    <label asp-for="Photo" class="control-label">Foto do Rosto</label>
-                    <span asp-validation-for="Photo" class="text-danger"></span>
-                    <input type="file" asp-for="Photo" class="form-control" />
+                    <label asp-for="Image" class="control-label">Foto do Rosto</label>
+                    <span asp-validation-for="Image" class="text-danger"></span>
+                    <input type="file" asp-for="Image" class="form-control" />
+                    <input hidden asp-for="ImageCroppedBase64" class="form-control" />
                 </div>
                 <div class="row pt-4">
                     <div class="col-6 col-md-6">

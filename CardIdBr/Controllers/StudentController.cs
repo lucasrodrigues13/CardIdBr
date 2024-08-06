@@ -4,7 +4,6 @@ using CardIdBr.Models.Student;
 using CardIdBr.Util.Image;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using QRCoder;
 using System.Globalization;
 
@@ -62,6 +61,8 @@ namespace CardIdBr.Controllers
                         Rg = studentViewModel.Rg,
                         SchoolLevel = studentViewModel.SchoolLevel,
                         UseCode = studentViewModel.UseCode,
+                        Validate = DateTime.Now.AddYears(1),
+                        CreatedAt = DateTime.Now
                     };
                     student.ImagePath = _imageManager.SaveUserImage(studentViewModel);
 
@@ -92,11 +93,16 @@ namespace CardIdBr.Controllers
                 Email = b.Email,
                 FullName = b.FullName,
                 Cpf = b.Cpf,
-                InstituitionName = b.InstituitionName
+                InstituitionName = b.InstituitionName,
+                ImagePath = b.ImagePath,
+                Validate = b.Validate
             }).FirstOrDefault();
 
             if (studentViewModel == null)
                 return NotFound();
+
+            if (System.IO.File.Exists(studentViewModel.ImagePath))
+                studentViewModel.ImageCroppedBase64 = _imageManager.GetByPath(studentViewModel.ImagePath);
 
             using (QRCodeGenerator qrGenerator = new QRCodeGenerator())
             using (QRCodeData qrCodeData = qrGenerator.CreateQrCode(studentViewModel.Cpf, QRCodeGenerator.ECCLevel.Q))
@@ -114,6 +120,9 @@ namespace CardIdBr.Controllers
         {
             try
             {
+                if (!_imageManager.ValidImage(studentViewModel.Image))
+                    return BadRequest("Foto Inválida");
+
                 if (ModelState.IsValid)
                 {
                     var studentFromDb = _context.Students.Find(studentViewModel.Id);
@@ -130,7 +139,11 @@ namespace CardIdBr.Controllers
                     studentFromDb.InstituitionName = studentViewModel.InstituitionName;
                     studentFromDb.Rg = studentViewModel.Rg;
                     studentFromDb.SchoolLevel = studentViewModel.SchoolLevel;
+                    studentFromDb.UpdatedAt = DateTime.Now;
                     studentFromDb.ImagePath = _imageManager.SaveUserImage(studentViewModel);
+
+                    if (studentFromDb.Validate == null)
+                        studentFromDb.Validate = studentFromDb.CreatedAt.AddYears(1);
 
                     _context.Students.Update(studentFromDb);
                     _context.SaveChanges();
