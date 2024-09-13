@@ -130,6 +130,11 @@ function fillCardId() {
     $(".text-course").html($("#Course").val().toUpperCase());
     $(".text-cpf").html("<b>CPF:</b> " + $("#Cpf").val().toUpperCase());
     $(".text-rg").html("<b>RG:</b> " + $("#Rg").val().toUpperCase());
+    $(".text-name-v").html($("#FullName").val().toUpperCase());
+    $(".text-instituition-v").html($("#InstituitionName").val().toUpperCase());
+    $(".text-course-v").html($("#Course").val().toUpperCase());
+    $(".text-cpf-v").html("<b>CPF:</b> " + $("#Cpf").val().toUpperCase());
+    $(".text-rg-v").html("<b>RG:</b> " + $("#Rg").val().toUpperCase());
 
     if ($("#BirthDate").val()) {
         var birthdate = new Date($("#BirthDate").val());
@@ -137,11 +142,33 @@ function fillCardId() {
         var month = checkZeroDate(birthdate.getMonth());
         var year = checkZeroDate(birthdate.getFullYear());
 
-        $(".text-birthdate").html("<b>DATA DE NASC.:</b> " + day + "/" + month + "/" + year)
+        $(".text-birthdate").html("<b>DATA DE NASC.:</b> "
+            + (day < 10 ? '0' + day : day)
+            + "/" + (month < 10 ? '0' + month : month)
+            + "/" + year);
+        $(".text-birthdate-v").html("<b>DATA DE NASC.:</b> "
+            + (day < 10 ? '0' + day : day)
+            + "/" + (month < 10 ? '0' + month : month)
+            + "/" + year);
     }
-    //$(".text-birthdate").html("<b>DATA DE NASC.:</b> " + new Date().toLocaleDateString());
-    $(".text-validate").html("<b>VALIDADE:</b> " + new Date($("#Validate").val()).toLocaleDateString());
+
+    var validate = new Date($("#Validate").val());
+    var dayV = checkZeroDate(validate.getDate());
+    var monthV = checkZeroDate(validate.getMonth());
+    var yearV = checkZeroDate(validate.getFullYear());
+
+    $(".text-validate").html("<b>VALIDADE.:</b> "
+        + (dayV < 10 ? '0' + dayV : dayV)
+        + "/" + (monthV < 10 ? '0' + monthV : monthV)
+        + "/" + yearV);
+
+    $(".text-validate-v").html("<b>VALIDADE.:</b> "
+        + (dayV < 10 ? '0' + dayV : dayV)
+        + "/" + (monthV < 10 ? '0' + monthV : monthV)
+        + "/" + yearV);
+
     $(".text-use-code").html($("#UseCode").val().toUpperCase());
+    $(".text-use-code-v").html($("#UseCode").val().toUpperCase());
 }
 
 function checkZeroDate(data) {

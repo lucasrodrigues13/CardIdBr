@@ -2,41 +2,80 @@
 @model StudentViewModel
 
 <div class="col-md-6">
-    @* <img src="/images/card_template.png" alt="Imagem da carteira de estudante" class="img-carteirinha"> *@
-    <figure id="container-card">
-        <img src="/images/card_template.png" alt="Imagem da carteira de estudante" class="img-carteirinha" />
-        <div>
-            <div class="div-card-name">
-                <figcaption class="text-name"></figcaption>
+    <div class="row">
+        <figure id="container-card">
+            <img src="/images/card_template.png" alt="Imagem da carteira de estudante" class="img-carteirinha" />
+            <div>
+                <div class="div-card-name">
+                    <figcaption class="text-name"></figcaption>
+                </div>
+                <div class="div-card-instituition">
+                    <figcaption class="text-instituition"></figcaption>
+                </div>
+                <div class="div-card-course">
+                    <figcaption class="text-course"></figcaption>
+                </div>
+                <div class="div-card-cpf">
+                    <figcaption class="text-cpf"><b>CPF:</b> </figcaption>
+                </div>
+                <div class="div-card-rg">
+                    <figcaption class="text-rg"><b>RG:</b> </figcaption>
+                </div>
+                <div class="div-card-birthdate">
+                    <figcaption class="text-birthdate"><b>DATA DE NASC.:</b> </figcaption>
+                </div>
+                <div class="div-card-validate">
+                    <figcaption class="text-validate"><b>VALIDADE:</b> </figcaption>
+                </div>
+                <div class="div-card-use-code">
+                    <figcaption class="label-use-code">CÓD. USO</figcaption>
+                    <figcaption class="text-use-code">123-ABCD</figcaption>
+                </div>
+                <div class="div-card-qr-code">
+                    <img class="img-card-qr-code" title="QRCODE" src="@String.Format("data:image/png;base64,{0}",@Model.QrCode)" />
+                </div>
+                <div class="div-card-photo">
+                    <img class="img-card-photo" title="Foto de Rosto" src="@String.Format("data:image/png;base64,{0}",@Model.ImageCroppedBase64)" />
+                </div>
             </div>
-            <div class="div-card-instituition">
-                <figcaption class="text-instituition"></figcaption>
+        </figure>
+    </div>
+
+    <div class="row">
+        <figure id="container-card">
+            <img src="/images/vertical_card_template.png" alt="Imagem da carteira de estudante" class="img-carteirinha-v" />
+            <div>
+                <div class="div-card-name-v">
+                    <figcaption class="text-name-v"></figcaption>
+                </div>
+                <div class="div-card-instituition-v">
+                    <figcaption class="text-instituition-v"></figcaption>
+                </div>
+                <div class="div-card-course-v">
+                    <figcaption class="text-course-v"></figcaption>
+                </div>
+                <div class="div-card-cpf-v">
+                    <figcaption class="text-cpf-v"><b>CPF:</b> </figcaption>
+                </div>
+                <div class="div-card-rg-v">
+                    <figcaption class="text-rg-v"><b>RG:</b> </figcaption>
+                </div>
+                <div class="div-card-birthdate-v">
+                    <figcaption class="text-birthdate-v"><b>DATA DE NASC.:</b> </figcaption>
+                </div>
+                <div class="div-card-validate-v">
+                    <figcaption class="text-validate-v"><b>VALIDADE:</b> </figcaption>
+                </div>
+                <div class="div-card-use-code-v">
+                    <figcaption class="text-use-code-v">123-ABCD</figcaption>
+                </div>
+                <div class="div-card-qr-code-v">
+                    <img class="img-card-qr-code-v" title="QRCODE" src="@String.Format("data:image/png;base64,{0}",@Model.QrCode)" />
+                </div>
+                <div class="div-card-photo-v">
+                    <img class="img-card-photo-v" title="Foto de Rosto" src="@String.Format("data:image/png;base64,{0}",@Model.ImageCroppedBase64)" />
+                </div>
             </div>
-            <div class="div-card-course">
-                <figcaption class="text-course"></figcaption>
-            </div>
-            <div class="div-card-cpf">
-                <figcaption class="text-cpf"><b>CPF:</b> </figcaption>
-            </div>
-            <div class="div-card-rg">
-                <figcaption class="text-rg"><b>RG:</b> </figcaption>
-            </div>
-            <div class="div-card-birthdate">
-                <figcaption class="text-birthdate"><b>DATA DE NASC.:</b> </figcaption>
-            </div>
-            <div class="div-card-validate">
-                <figcaption class="text-validate"><b>VALIDADE:</b> </figcaption>
-            </div>
-            <div class="div-card-use-code">
-                <figcaption class="label-use-code">CÓD. USO</figcaption>
-                <figcaption class="text-use-code">123-ABCD</figcaption>
-            </div>
-            <div class="div-card-qr-code">
-                <img class="img-card-qr-code" title="QRCODE" src="@String.Format("data:image/png;base64,{0}",@Model.QrCode)" />
-            </div>
-            <div class="div-card-photo">
-                <img class="img-card-photo" title="Foto de Rosto" src="@String.Format("data:image/png;base64,{0}",@Model.ImageCroppedBase64)" />
-            </div>
-        </div>
-    </figure>
+        </figure>
+    </div>
 </div>

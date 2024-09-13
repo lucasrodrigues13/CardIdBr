@@ -1,4 +1,9 @@
-﻿#container-card {
+﻿/* ---card--- */
+.img-carteirinha {
+    max-width: 450px;
+}
+
+#container-card {
     display: inline-block;
     position: relative;
 }
@@ -100,3 +105,110 @@
     max-width: 113px;
     height: 144px;
 }
+/* ---card--- */
+
+/* ---vertical card--- */
+.img-carteirinha-v {
+    max-width: 450px;
+}
+
+.div-card-name-v {
+    position: absolute;
+    top: 400px;
+    left: 40px;
+    font-size: 17px;
+    color: black;
+    font-weight: bold;
+}
+
+.div-card-instituition-v {
+    position: absolute;
+    top: 440px;
+    left: 40px;
+    font-size: 15px;
+    color: black;
+}
+
+.div-card-course-v {
+    position: absolute;
+    top: 480px;
+    left: 40px;
+    font-size: 15px;
+    color: black;
+}
+
+.div-card-cpf-v {
+    position: absolute;
+    top: 520px;
+    left: 40px;
+    font-size: 15px;
+    color: black;
+}
+
+.value-cpf-v {
+    top: 520px;
+    left: 40px;
+}
+
+.div-card-rg-v {
+    position: absolute;
+    top: 560px;
+    left: 40px;
+    font-size: 15px;
+    color: black;
+}
+
+.div-card-birthdate-v {
+    position: absolute;
+    top: 600px;
+    left: 40px;
+    font-size: 15px;
+    color: black;
+}
+
+.div-card-validate-v {
+    position: absolute;
+    top: 640px;
+    left: 40px;
+    font-size: 15px;
+    color: black;
+}
+
+.img-card-qr-code-v {
+    max-width: 1500px;
+    max-height: 180px;
+}
+
+.div-card-qr-code-v {
+    position: absolute;
+    top: 160px;
+    left: 242px;
+    color: black;
+    font-weight: bolder;
+}
+
+.div-card-use-code-v {
+    position: absolute;
+    top: 350px;
+    left: 303px;
+    font-size: 14px;
+    color: black;
+    font-weight: bolder;
+}
+
+.img-card-photo-v {
+    height: 215px;
+    border-radius: 15px;
+}
+
+.div-card-photo-v {
+    position: absolute;
+    top: 153px;
+    left: 34px;
+    max-width: 113px;
+    height: 144px;
+    color: black;
+    font-weight: bolder;
+}
+
+/* ---vertical card--- */
